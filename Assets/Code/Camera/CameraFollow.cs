@@ -9,7 +9,7 @@ public class CameraFollow : MonoBehaviour
     void LateUpdate()
     {
         Vector3 newPosition = player.position + offset;
-        Vector3 desiredPosition = new Vector3(newPosition.x, newPosition.y, -10);
+        Vector3 desiredPosition = new Vector3(newPosition.x, newPosition.y, -20);
         transform.position = desiredPosition;
     }
 }
