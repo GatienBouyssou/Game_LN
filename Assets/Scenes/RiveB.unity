@@ -13082,6 +13082,7 @@ MonoBehaviour:
   - {fileID: 1541290}
   - {fileID: 995874777}
   - {fileID: 1478943461}
+  influenceArea: {x: 2, y: 2}
 --- !u!1 &1478943460
 GameObject:
   m_ObjectHideFlags: 0

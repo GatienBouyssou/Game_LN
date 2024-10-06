@@ -11,6 +11,9 @@ public class Mami : MonoBehaviour
     private Tilemap foundationTilemap;
     private int currentCheckpointIndex = 0;
 
+    [Header("Taille de la zone de destruction")]
+    public Vector2 influenceArea = new Vector2(1f, 1f); 
+
     private void Start()
     {
         foundationTilemap = GameObject.Find("Fondation").GetComponent<Tilemap>();
@@ -19,7 +22,7 @@ public class Mami : MonoBehaviour
     void Update()
     {
         MoveTowardsNextCheckpoint();
-        DestroyPlatformAtCurrentPosition();
+        DestroyTilesInArea();
     }
 
     void MoveTowardsNextCheckpoint()
@@ -36,11 +39,21 @@ public class Mami : MonoBehaviour
         }
     }
 
-    void DestroyPlatformAtCurrentPosition()
+    void DestroyTilesInArea()
     {
         Vector3 currentPosition = transform.position;
-        Vector3Int cellPosition = foundationTilemap.WorldToCell(currentPosition);
-        foundationTilemap.SetTile(cellPosition, null);
+
+        Vector3Int minCellPosition = foundationTilemap.WorldToCell(currentPosition - (Vector3)influenceArea / 2);
+        Vector3Int maxCellPosition = foundationTilemap.WorldToCell(currentPosition + (Vector3)influenceArea / 2);
+
+        for (int x = minCellPosition.x; x <= maxCellPosition.x; x++)
+        {
+            for (int y = minCellPosition.y; y <= maxCellPosition.y; y++)
+            {
+                Vector3Int cellPosition = new Vector3Int(x, y, 0);
+                foundationTilemap.SetTile(cellPosition, null);
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
