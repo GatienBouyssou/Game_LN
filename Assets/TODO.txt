@@ -1,2 +1,1 @@
 Ajouter les effets des tuiles
-Fix le fait que l'on puisse rester accrocher à un "mur" (collider) si on reste appuyé sur une touche de déplacement
