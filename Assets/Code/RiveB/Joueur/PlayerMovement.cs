@@ -3,14 +3,17 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Variable de déplacement")]
-    public float speed = 1f; 
+    public float speed = 1f;
     public float jumpForce = 1f;
+    public float wallSlideSpeed = 0.5f;
 
-    // [Header("Positions")]
+    [Header("Autres..")]
+    public LayerMask groundLayer;
+
     private Transform spawnPoint;
-
     private Rigidbody2D rb;
-    private bool isGrounded = true; // Pour savoir si il touche le sol
+    private bool isGrounded = false;
+    private bool isTouchingWall = false;
 
     void Start()
     {
@@ -21,33 +24,35 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        float moveInput = Input.GetAxis("Horizontal");
-        rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+        CheckCollisions();
 
-        if (Input.GetButton("Jump") && isGrounded)
+        if (!isTouchingWall)
+        {
+            float moveInput = Input.GetAxis("Horizontal");
+            rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+        }
+
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
+
+        if (isTouchingWall && !isGrounded && rb.velocity.y < 0)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed); 
+        }
+
         if (Input.GetButtonDown("ReSpawn"))
         {
             transform.position = spawnPoint.position;
         }
     }
 
-
-    void OnCollisionEnter2D(Collision2D collision)
+    void CheckCollisions()
     {
-        if (collision.collider.CompareTag("Sol"))
-        {
-            isGrounded = true;
-        }
-    }
+        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, 1.1f, groundLayer); // Est ce qu'il vaudrait pas mieux faire un onColliderEnter2D ??
 
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Sol"))
-        {
-            isGrounded = false;
-        }
+        isTouchingWall = Physics2D.Raycast(transform.position, Vector2.right, 0.6f, groundLayer) ||
+                         Physics2D.Raycast(transform.position, Vector2.left, 0.6f, groundLayer);
     }
 }
