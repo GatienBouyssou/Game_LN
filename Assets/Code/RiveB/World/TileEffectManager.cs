@@ -1,43 +1,36 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class TileEffectManager : MonoBehaviour
 {
-    public Tilemap tilemap; 
+    public Tilemap tilemap;
+    private List<ITileEffect> tileEffects = new List<ITileEffect>();
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private Rigidbody2D playerRb;
+
+    void Start()
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Sol"))
-        {
-            Vector3 hitPosition = Vector3.zero;
-            foreach (ContactPoint2D hit in collision.contacts)
-            {
-                hitPosition.x = hit.point.x;
-                hitPosition.y = hit.point.y;
-
-                Vector3Int tilePosition = tilemap.WorldToCell(hitPosition);
-                TileBase tile = tilemap.GetTile(tilePosition);
-
-                if (tile is EffetTile effetTile)
-                {
-                    Debug.Log("Tuile avec effet détectée : " + effetTile.effet);
-                    ApplyEffect(effetTile.effet);
-                }
-            }
-        }
+        playerRb = GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>();
     }
 
-    private void ApplyEffect(string effet)
+    public void RegisterTileEffect(ITileEffect tileEffect)
     {
-        switch (effet)
+        tileEffects.Add(tileEffect);
+    }
+
+    void Update()
+    {
+        Vector3Int playerTilePosition = tilemap.WorldToCell(playerRb.transform.position + new Vector3(0, -0.5f, 0));
+        TileBase currentTile = tilemap.GetTile(playerTilePosition);
+
+        foreach (ITileEffect effect in tileEffects)
         {
-            case "glisser":
-                // TODO: glissade 
-                Debug.Log("BB");
-                break;
-            default:
-                Debug.Log("AA");
-                break;
+            if (effect.IsApplicable(currentTile, tilemap))
+            {
+                effect.ApplyEffect(playerRb);
+                return;
+            }
         }
     }
 }
