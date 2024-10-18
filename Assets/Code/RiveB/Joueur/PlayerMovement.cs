@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckCollisions()
     {
-        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, 1.1f, groundLayer); // Est ce qu'il vaudrait pas mieux faire un onColliderEnter2D ??
+        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, 0.9f, groundLayer); // Est ce qu'il vaudrait pas mieux faire un onColliderEnter2D ??
 
         isTouchingWall = Physics2D.Raycast(transform.position, Vector2.right, 0.6f, groundLayer) ||
                          Physics2D.Raycast(transform.position, Vector2.left, 0.6f, groundLayer);

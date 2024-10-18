@@ -6,7 +6,10 @@ public class GameInitializer : MonoBehaviour
 
     void Start()
     {
-        IceTileEffect iceEffect = FindObjectOfType<IceTileEffect>();
-        tileEffectManager.RegisterTileEffect(iceEffect);
+        TreadmillTileEffect TreadmillEffect = FindObjectOfType<TreadmillTileEffect>();
+        UpperFanTile upperFanEffect = FindObjectOfType<UpperFanTile>();
+
+        tileEffectManager.RegisterTileEffect(TreadmillEffect);
+        tileEffectManager.RegisterTileEffect(upperFanEffect);
     }
 }

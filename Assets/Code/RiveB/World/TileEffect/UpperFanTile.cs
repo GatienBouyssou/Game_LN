@@ -1,17 +1,24 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class IceTileEffect : MonoBehaviour, ITileEffect
+public class UpperFanTile : MonoBehaviour, ITileEffect
 {
-    public Sprite[] iceSprites; 
-    public float slideFactor = 5f;
-
+    public Sprite[] UpperFanSprites;
     private GameObject player;
-    private Vector3 feetOffset = new Vector3(0, -0.5f, 0); 
+    private Vector3 feetOffset = new Vector3(0, -0.5f, 0);
 
     void Start()
     {
         player = GameObject.FindWithTag("Player");
+    }
+
+    public void ApplyEffect(Rigidbody2D playerRb)
+    {
+        Vector2 velocity = playerRb.velocity;
+        velocity.y += 0.12f;
+        playerRb.velocity = velocity;
     }
 
     public bool IsApplicable(TileBase tile, Tilemap tilemap)
@@ -21,21 +28,14 @@ public class IceTileEffect : MonoBehaviour, ITileEffect
             Vector3Int tilePosition = tilemap.WorldToCell(player.transform.position + feetOffset);
             Sprite tileSprite = tilemap.GetSprite(tilePosition);
 
-            foreach (Sprite iceSprite in iceSprites)
+            foreach (Sprite UpperFanSprite in UpperFanSprites)
             {
-                if (tileSprite == iceSprite)
+                if (tileSprite == UpperFanSprite)
                 {
                     return true;
                 }
             }
         }
         return false;
-    }
-
-    public void ApplyEffect(Rigidbody2D playerRb)
-    {
-        Vector2 velocity = playerRb.velocity;
-        velocity.x *= slideFactor;
-        playerRb.velocity = velocity;
     }
 }
