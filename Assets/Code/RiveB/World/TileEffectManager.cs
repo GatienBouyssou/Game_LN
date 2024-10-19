@@ -1,3 +1,4 @@
+using Assets.Code.RiveB.World.TileEffect;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -14,7 +15,17 @@ public class TileEffectManager : MonoBehaviour
         playerRb = GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>();
     }
 
-    public void RegisterTileEffect(ITileEffect tileEffect)
+    public void RegisterTileEffects()
+    {
+        TileEffect[] tileEffects = FindObjectsOfType<TileEffect>();
+
+        foreach (TileEffect tileEffect in tileEffects)
+        {
+            RegisterTileEffect(tileEffect);
+        }
+    }
+
+    private void RegisterTileEffect(ITileEffect tileEffect)
     {
         tileEffects.Add(tileEffect);
     }

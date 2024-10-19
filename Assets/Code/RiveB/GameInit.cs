@@ -1,3 +1,4 @@
+using Assets.Code.RiveB.World.TileEffect;
 using UnityEngine;
 
 public class GameInitializer : MonoBehaviour
@@ -6,10 +7,6 @@ public class GameInitializer : MonoBehaviour
 
     void Start()
     {
-        TreadmillTileEffect TreadmillEffect = FindObjectOfType<TreadmillTileEffect>();
-        UpperFanTile upperFanEffect = FindObjectOfType<UpperFanTile>();
-
-        tileEffectManager.RegisterTileEffect(TreadmillEffect);
-        tileEffectManager.RegisterTileEffect(upperFanEffect);
+        tileEffectManager.RegisterTileEffects();
     }
 }
