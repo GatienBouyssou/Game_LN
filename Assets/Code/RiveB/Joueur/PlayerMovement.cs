@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
         }
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && (isGrounded || (!isGrounded && isTouchingWall)))
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
