@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpikeTileEffect : TileEffect
 {
+    private const int vitesseMamiMax = 10;
     public float slowFactor = 0.5f;
     private bool alreadyApplyed = false;
 
@@ -14,7 +15,7 @@ public class SpikeTileEffect : TileEffect
         playerRb.velocity = velocity;
 
         Mami mami = FindObjectOfType<Mami>();
-        if (!alreadyApplyed && mami.moveSpeed < 10)
+        if (!alreadyApplyed && mami.moveSpeed < vitesseMamiMax)
         {
             mami.moveSpeed += 1;
             alreadyApplyed = true;
@@ -22,7 +23,7 @@ public class SpikeTileEffect : TileEffect
             StartCoroutine(ResetAlreadyApplyed());
         }
     }
-    
+
     private IEnumerator ResetAlreadyApplyed()
     {
         yield return new WaitForSeconds(3f);

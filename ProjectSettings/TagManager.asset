@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Sol
   - Player Spawn
+  - Protected
   layers:
   - Default
   - TransparentFX

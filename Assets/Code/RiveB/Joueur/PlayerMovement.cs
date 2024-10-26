@@ -1,3 +1,4 @@
+using Assets.Code.RiveB.World;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -5,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Variable de déplacement")]
     public float speed = 1f;
     public float jumpForce = 1f;
+    public float wallJumpForce = 1f;
     public float wallSlideSpeed = 0.5f;
 
     [Header("Autres..")]
@@ -14,9 +16,12 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private bool isGrounded = false;
     private bool isTouchingWall = false;
+    private int wallDirection = 0;
+    private WorldManager worldManager;
 
     void Start()
     {
+        worldManager = FindObjectOfType<WorldManager>();
         spawnPoint = GameObject.FindGameObjectWithTag("Player Spawn").transform;
         transform.position = spawnPoint.position;
         rb = GetComponent<Rigidbody2D>();
@@ -26,33 +31,57 @@ public class PlayerMovement : MonoBehaviour
     {
         CheckCollisions();
 
+        float moveInput = Input.GetAxis("Horizontal");
+
         if (!isTouchingWall)
         {
-            float moveInput = Input.GetAxis("Horizontal");
             rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
         }
 
-        if (Input.GetButtonDown("Jump") && (isGrounded || (!isGrounded && isTouchingWall)))
+        if (Input.GetButtonDown("Jump"))
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            if (isGrounded)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            }
+            else if (isTouchingWall && !isGrounded)
+            {
+                if ((wallDirection == -1 && moveInput > 0) || (wallDirection == 1 && moveInput < 0))
+                {
+                    rb.velocity = new Vector2(wallJumpForce * -wallDirection, jumpForce);
+                }
+            }
         }
 
         if (isTouchingWall && !isGrounded && rb.velocity.y < 0)
         {
-            rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed); 
+            rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
         }
 
         if (Input.GetButtonDown("ReSpawn"))
         {
+            worldManager.ResetScene();
             transform.position = spawnPoint.position;
+        }
+        
+        if (!isTouchingWall && !isGrounded)
+        {
+            if (transform.position.y < 40)
+            {
+                worldManager.ResetScene();
+                transform.position = spawnPoint.position;
+            }
         }
     }
 
     void CheckCollisions()
     {
-        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, 0.9f, groundLayer); // Est ce qu'il vaudrait pas mieux faire un onColliderEnter2D ??
+        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, groundLayer);
 
-        isTouchingWall = Physics2D.Raycast(transform.position, Vector2.right, 0.6f, groundLayer) ||
-                         Physics2D.Raycast(transform.position, Vector2.left, 0.6f, groundLayer);
+        RaycastHit2D hitRight = Physics2D.Raycast(transform.position, Vector2.right, 0.6f, groundLayer);
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, 0.6f, groundLayer);
+
+        isTouchingWall = hitRight || hitLeft;
+        wallDirection = hitRight ? 1 : hitLeft ? -1 : 0;
     }
 }
