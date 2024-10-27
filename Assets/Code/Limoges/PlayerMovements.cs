@@ -93,10 +93,8 @@ public class PlayerMovements : MonoBehaviour
     {
         Vector3 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         direction.Normalize();
-        Debug.Log(direction);
         direction.Scale(transform.localScale+new Vector3(0.1f,0.1f,0.1f));
         direction.Scale(new Vector3(10,10,0));
-        Debug.Log(direction);
         Vector3 initialMissilePos = transform.position+direction;
         GameObject missile = Instantiate(classicMissile, initialMissilePos, Quaternion.LookRotation(Vector3.forward, direction));
     }
