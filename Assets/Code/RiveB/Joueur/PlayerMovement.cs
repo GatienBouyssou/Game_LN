@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
             canJumpWall = true;
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButton("Jump"))
         {
             if (isGrounded)
             {
