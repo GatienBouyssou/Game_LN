@@ -1,4 +1,6 @@
-Faire le regen de map..
+TODO: glisser même si tu appuies sur une touche
+TODO: ENLEVER les spikes sur la glace
+TODO: fix jump ?
 
    ^			                ^
  / ! \    !! IMPORTANT !!     / ! \
