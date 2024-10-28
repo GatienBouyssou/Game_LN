@@ -1,5 +1,6 @@
 using Assets.Code.RiveB.World;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        worldManager = FindObjectOfType<WorldManager>();
+        //worldManager = FindObjectOfType<WorldManager>();
         spawnPoint = GameObject.FindGameObjectWithTag("Player Spawn").transform;
         transform.position = spawnPoint.position;
         rb = GetComponent<Rigidbody2D>();
@@ -60,16 +61,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("ReSpawn"))
         {
-            worldManager.ResetScene();
-            transform.position = spawnPoint.position;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         
         if (!isTouchingWall && !isGrounded)
         {
-            if (transform.position.y < 40)
+            if (transform.position.y < -40)
             {
-                worldManager.ResetScene();
-                transform.position = spawnPoint.position;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
     }
