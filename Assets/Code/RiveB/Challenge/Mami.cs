@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class Mami : MonoBehaviour
@@ -6,7 +7,7 @@ public class Mami : MonoBehaviour
     [Header("Attributs de base")]
     public float moveSpeed = 2f;
     [Header("Positions")]
-    public Transform[] checkpoints;
+    public GameObject[] checkpoints;
 
     private Tilemap foundationTilemap;
     private int currentCheckpointIndex = 0;
@@ -29,7 +30,7 @@ public class Mami : MonoBehaviour
     {
         if (currentCheckpointIndex < checkpoints.Length)
         {
-            Transform targetCheckpoint = checkpoints[currentCheckpointIndex];
+            Transform targetCheckpoint = checkpoints[currentCheckpointIndex].transform;
             transform.position = Vector2.MoveTowards(transform.position, targetCheckpoint.position, moveSpeed * Time.deltaTime);
 
             if (Vector2.Distance(transform.position, targetCheckpoint.position) < 0.1f)
@@ -66,6 +67,6 @@ public class Mami : MonoBehaviour
 
     void PlayerDeath()
     {
-        Debug.Log("Touché");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

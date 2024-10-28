@@ -1,4 +1,5 @@
 using Assets.Code.RiveB.World;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,11 +19,10 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded = false;
     private bool isTouchingWall = false;
     private int wallDirection = 0;
-    private WorldManager worldManager;
+    private bool canJumpWall = true;
 
     void Start()
     {
-        //worldManager = FindObjectOfType<WorldManager>();
         spawnPoint = GameObject.FindGameObjectWithTag("Player Spawn").transform;
         transform.position = spawnPoint.position;
         rb = GetComponent<Rigidbody2D>();
@@ -38,6 +38,11 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
         }
+        
+        if (isGrounded && !canJumpWall && !isTouchingWall)
+        {
+            canJumpWall = true;
+        }
 
         if (Input.GetButtonDown("Jump"))
         {
@@ -50,6 +55,15 @@ public class PlayerMovement : MonoBehaviour
                 if ((wallDirection == -1 && moveInput > 0) || (wallDirection == 1 && moveInput < 0))
                 {
                     rb.velocity = new Vector2(wallJumpForce * -wallDirection, jumpForce);
+                }
+                else
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    StartCoroutine(WaitAndExecute());
+                    if (isTouchingWall)
+                    {
+                        canJumpWall = false;
+                    }
                 }
             }
         }
@@ -71,6 +85,11 @@ public class PlayerMovement : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
+    }
+
+    IEnumerator WaitAndExecute()
+    {
+        yield return new WaitForSeconds(1f);
     }
 
     void CheckCollisions()
