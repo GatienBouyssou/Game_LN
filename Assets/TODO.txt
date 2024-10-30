@@ -1,4 +1,5 @@
 TODO: glisser même si tu appuies sur une touche
+TODO: Dire à maman de pas faire le bug de discussion avec Fernando
 
    ^			                ^
  / ! \    !! IMPORTANT !!     / ! \

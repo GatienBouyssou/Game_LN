@@ -21,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
     private int wallDirection = 0;
     private bool canJumpWall = true;
 
+    public bool canMove = true;
+
     void Start()
     {
         spawnPoint = GameObject.FindGameObjectWithTag("Player Spawn").transform;
@@ -30,59 +32,62 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        CheckCollisions();
-
-        float moveInput = Input.GetAxis("Horizontal");
-
-        if (!isTouchingWall)
+        if (canMove)
         {
-            rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
-        }
-        
-        if (isGrounded && !canJumpWall && !isTouchingWall)
-        {
-            canJumpWall = true;
-        }
+            CheckCollisions();
 
-        if (Input.GetButton("Jump"))
-        {
-            if (isGrounded)
+            float moveInput = Input.GetAxis("Horizontal");
+
+            if (!isTouchingWall)
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
             }
-            else if (isTouchingWall && !isGrounded)
+
+            if (isGrounded && !canJumpWall && !isTouchingWall)
             {
-                if ((wallDirection == -1 && moveInput > 0) || (wallDirection == 1 && moveInput < 0))
-                {
-                    rb.velocity = new Vector2(wallJumpForce * -wallDirection, jumpForce);
-                }
-                else
+                canJumpWall = true;
+            }
+
+            if (Input.GetButton("Jump"))
+            {
+                if (isGrounded)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                    StartCoroutine(WaitAndExecute());
-                    if (isTouchingWall)
+                }
+                else if (isTouchingWall && !isGrounded)
+                {
+                    if ((wallDirection == -1 && moveInput > 0) || (wallDirection == 1 && moveInput < 0))
                     {
-                        canJumpWall = false;
+                        rb.velocity = new Vector2(wallJumpForce * -wallDirection, jumpForce);
+                    }
+                    else
+                    {
+                        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                        StartCoroutine(WaitAndExecute());
+                        if (isTouchingWall)
+                        {
+                            canJumpWall = false;
+                        }
                     }
                 }
             }
-        }
 
-        if (isTouchingWall && !isGrounded && rb.velocity.y < 0)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
-        }
+            if (isTouchingWall && !isGrounded && rb.velocity.y < 0)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
+            }
 
-        if (Input.GetButtonDown("ReSpawn"))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-        
-        if (!isTouchingWall && !isGrounded)
-        {
-            if (transform.position.y < -40)
+            if (Input.GetButtonDown("ReSpawn"))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+
+            if (!isTouchingWall && !isGrounded)
+            {
+                if (transform.position.y < -40)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
             }
         }
     }
