@@ -49,7 +49,7 @@ namespace Assets.Code.RiveB.Challenge
                 player.transform.position -= new Vector3(0.5f, 0, 0);
 
                 TMP_Text tmp = textPrefab.GetComponent<TMP_Text>();
-                tmp.text = "Holaaa"; 
+                tmp.text = "Holaaa";
 
                 StartCoroutine(DialogueCoroutine(tmp, player.GetComponent<PlayerMovement>(), tilePosition));
             }

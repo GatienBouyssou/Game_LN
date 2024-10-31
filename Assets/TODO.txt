@@ -1,4 +1,5 @@
 TODO: glisser même si tu appuies sur une touche
+TODO: Fix le jump..
 
    ^			                ^
  / ! \    !! IMPORTANT !!     / ! \
