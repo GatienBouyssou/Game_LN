@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RiveB/RiveB_checkpoint1.unity
     guid: 16da008bfb956a741b56eadf2eeb43ed
+  - enabled: 1
+    path: Assets/Scenes/RiveB/RiveB2.unity
+    guid: 4353ab32becf10942817f6dda6a4d172
+  - enabled: 1
+    path: Assets/Scenes/RiveB/RiveB_checkpoint2.unity
+    guid: 575ce6e0b796c3f4a8b9d7a6b73e593f
   m_configObjects: {}

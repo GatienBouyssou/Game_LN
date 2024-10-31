@@ -1,4 +1,5 @@
 using Assets.Code.RiveB.World;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -22,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canJumpWall = true;
 
     public bool canMove = true;
+    private bool health = false;
 
     void Start()
     {
@@ -106,5 +108,24 @@ public class PlayerMovement : MonoBehaviour
 
         isTouchingWall = hitRight || hitLeft;
         wallDirection = hitRight ? 1 : hitLeft ? -1 : 0;
+    }
+
+    public bool isPlayerGrounded()
+    {
+        return isGrounded;
+    }
+
+    internal void RemoveLifeSavior()
+    {
+        health = false;
+    }
+    internal void AddLifeSavior()
+    {
+        health = true;
+    }
+
+    internal bool hasLifeSavior()
+    {
+        return health;
     }
 }
