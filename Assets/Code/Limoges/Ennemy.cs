@@ -8,9 +8,21 @@ public class Ennemy : MonoBehaviour
     private GameObject player;
     private GameObject castle;
     public float speed = 3f;
-    public int attack = 10;
-    public int health = 20;
+    public float attack = 10;
+    public float health = 20;
 
+    void Die() 
+    {
+        Destroy(gameObject);
+    }
+
+    void ApplyDamage(float damage)
+    {
+        health -= damage;
+        if (health < 0) {
+            Die();
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -30,5 +42,12 @@ public class Ennemy : MonoBehaviour
         Vector2 direction = target.transform.position - transform.position;
         direction.Normalize();
         transform.Translate(direction * speed * Time.deltaTime);
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.CompareTag("Castle") || other.gameObject.CompareTag("Player")) {
+            other.gameObject.SendMessage("ApplyDamage", attack);
+            Destroy(gameObject);
+        }
     }
 }

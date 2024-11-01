@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2187505742432353051}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -139,7 +139,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -173,3 +173,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 0
   speed: 3
+  attack: 10
+  health: 20

@@ -5,6 +5,7 @@ using TMPro;
 
 public class PlayerMovements : MonoBehaviour
 {
+    public GameObject healthBar;
     public GameObject classicMissile;
     public float speed = 5f;
     public float dashSpeed = 50f;
@@ -20,12 +21,15 @@ public class PlayerMovements : MonoBehaviour
     private bool dashInCooldown;
     private bool playerCollision = true;
 
+    void ApplyDamage(float damage) {
 
+    } 
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         nextDash = Time.time;
+        Instantiate(healthBar, transform.position, Quaternion.identity);
     }
 
     void FixedUpdate()

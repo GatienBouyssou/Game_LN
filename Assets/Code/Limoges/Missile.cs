@@ -6,6 +6,7 @@ public class Missile : MonoBehaviour
 {
     public float lifeTime = 5f;
     public float missileSpeed = 15f;
+    public float damage = 20f;
     private Rigidbody2D rb;
     void Start()
     {
@@ -24,6 +25,10 @@ public class Missile : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("Enemy")) 
+        { 
+            collision.gameObject.SendMessage("ApplyDamage", damage); 
+        }
         Destroy(gameObject);    
     }
 }
