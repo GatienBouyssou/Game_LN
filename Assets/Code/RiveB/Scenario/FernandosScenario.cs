@@ -37,6 +37,7 @@ namespace Assets.Code.RiveB.Scenario
         {
             yield return new WaitForEndOfFrame();
 
+            titlePrefab.color = Color.white;
             titlePrefab.text = "Vous avez rendu service à Fernando..";
 
             yield return new WaitForSeconds(3);
