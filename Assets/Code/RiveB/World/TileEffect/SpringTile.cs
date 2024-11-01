@@ -30,11 +30,12 @@ namespace Assets.Code.RiveB.World.TileEffect
             isActivated = true;
             player.canMove = false;
 
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(0.25f);
 
-            playerRb.velocity = new Vector2(playerRb.velocity.x, launchForce);
             player.canMove = true;
-            yield return new WaitForSeconds(0.5f);
+            playerRb.velocity = new Vector2(playerRb.velocity.x, launchForce);
+            
+            yield return new WaitForSeconds(0.15f);
 
             Tile relaxedTile = ScriptableObject.CreateInstance<Tile>();
             relaxedTile.sprite = springRelaxedSprite;
