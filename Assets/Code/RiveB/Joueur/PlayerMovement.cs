@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -14,13 +15,13 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Autres..")]
     public LayerMask groundLayer;
+    public Tilemap fondationTilemap;
 
     private Transform spawnPoint;
     private Rigidbody2D rb;
     private bool isGrounded = false;
     private bool isTouchingWall = false;
     private int wallDirection = 0;
-    private bool canJumpWall = true;
 
     public bool canMove = true;
     private bool health = false;
@@ -45,14 +46,9 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
             }
 
-            if (isGrounded && !canJumpWall && !isTouchingWall)
-            {
-                canJumpWall = true;
-            }
-
             if (Input.GetButton("Jump"))
             {
-                if (isGrounded)
+                if (isGrounded | isOnPlatform())
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 }
@@ -61,15 +57,6 @@ public class PlayerMovement : MonoBehaviour
                     if ((wallDirection == -1 && moveInput > 0) || (wallDirection == 1 && moveInput < 0))
                     {
                         rb.velocity = new Vector2(wallJumpForce * -wallDirection, jumpForce);
-                    }
-                    else
-                    {
-                        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                        StartCoroutine(WaitAndExecute());
-                        if (isTouchingWall)
-                        {
-                            canJumpWall = false;
-                        }
                     }
                 }
             }
@@ -94,9 +81,24 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    IEnumerator WaitAndExecute()
+    private bool isOnPlatform()
     {
-        yield return new WaitForSeconds(1f);
+        if (isGrounded || !isTouchingWall) return false;
+
+        Vector3Int wallTilePosition = fondationTilemap.WorldToCell(transform.position + new Vector3(wallDirection * 0.6f, 0, 0));
+
+        if (fondationTilemap.GetTile(wallTilePosition) == null) return false;
+
+        Vector3Int tileAbove = wallTilePosition + Vector3Int.up;
+        if (fondationTilemap.GetTile(tileAbove) == null) return true;
+
+        Vector3Int tileTwoAbove = wallTilePosition + Vector3Int.up * 2;
+        if (fondationTilemap.GetTile(tileTwoAbove) == null) return true;
+
+        Vector3Int tileBelow = wallTilePosition + Vector3Int.down;
+        if (fondationTilemap.GetTile(tileBelow) == null) return true;
+
+        return false;
     }
 
     void CheckCollisions()
