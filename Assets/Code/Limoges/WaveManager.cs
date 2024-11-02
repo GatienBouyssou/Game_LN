@@ -8,7 +8,7 @@ public class WaveManager : MonoBehaviour
 {
     public TMP_Text waveNumMesh;
     public TMP_Text waveTimerMesh;
-    public float waveDuration = 10;
+    public float waveDuration = 90;
     private bool isPause = false;
     private float curTime;
     private int waveNum = 1;

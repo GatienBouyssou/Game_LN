@@ -15,7 +15,7 @@ namespace GameLN.Limoges
         protected float cooldownHealing = 1;
         protected float remainingTimeHealing;
 
-        protected Slider healthBar;
+        public Slider healthBar;
 
         public virtual void Die()
         {
