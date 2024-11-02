@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/HomeScene.unity
+    guid: 0d98005022509664c83c433d328fd4a8
+  - enabled: 1
     path: Assets/Scenes/RiveB/RiveB.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
@@ -23,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Limoges/LaWin.unity
     guid: 942f1f42d4dbc5a46bcefec60224672a
+  - enabled: 1
+    path: Assets/Scenes/Limoges/GameOver.unity
+    guid: 445f840f9430993c7833bd90c898303d
   m_configObjects: {}

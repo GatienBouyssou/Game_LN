@@ -5,8 +5,7 @@ using UnityEditor;
 
 public class SpawnManager : MonoBehaviour
 {
-    private string enemyDirectory = "Assets/Prefabs/Limoges/Resources/Enemies";
-    private string baseEnemyResources = "Enemies/";
+    private string[] enemyPath = new string[]{"Enemies/Enemy", "Enemies/MidBoss", "Enemies/Boss"};
     private List<GameObject> allEnemiesType;
     public float bossSpawnRate = 0.2f;
     public float midBossSpawnRate = 0.2f;
@@ -56,13 +55,9 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         allEnemiesType = new List<GameObject>();
-        string[] prefabs = AssetDatabase.FindAssets("t:Prefab", new string[] { enemyDirectory });
-        Debug.Log(prefabs);
-        foreach (string prefabPath in prefabs)
+        foreach (string prefabPath in enemyPath)
         {
-            string path = AssetDatabase.GUIDToAssetPath(prefabPath);
-            string fileName = path.Split('/')[^1].Split('.')[0];
-            var enemyPrefab = Resources.Load<GameObject>(baseEnemyResources + fileName);
+            var enemyPrefab = Resources.Load<GameObject>(prefabPath);
             allEnemiesType.Add(enemyPrefab);
         }
         timeBeforeSpawn = GetNextRandomSpawn();
