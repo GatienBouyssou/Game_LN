@@ -14,6 +14,7 @@ public class SpawnManager : MonoBehaviour
     public float spawnRate = 0.5f;
     public float timeInterSpawn = 5.0f;
     private float timeBeforeSpawn;
+    private bool isPause = false;
 
     float GetNextRandomSpawn()
     {
@@ -35,6 +36,10 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    public void SetPause(bool pause) {
+        isPause = pause;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +59,9 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isPause) {
+            return;
+        }
         timeBeforeSpawn -= Time.deltaTime;
         if (timeBeforeSpawn < 0)
         {

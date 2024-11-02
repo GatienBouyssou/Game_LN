@@ -10,6 +10,8 @@ TagManager:
   - Mami
   - Solids
   - Castle
+  - Spawns
+  - Enemy
   layers:
   - Default
   - TransparentFX
