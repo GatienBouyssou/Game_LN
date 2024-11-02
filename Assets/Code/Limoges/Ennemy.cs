@@ -1,39 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameLN.Limoges;
 
-public class Ennemy : MonoBehaviour
+public class Ennemy : RegenableEntity
 {
     public float size;
     private GameObject player;
     private GameObject castle;
-    public float speed = 3f;
-    public float attack = 10;
-    public float health = 20;
 
-    void Die() 
+    public override void Start()
     {
-        Destroy(gameObject);
-    }
-
-    void ApplyDamage(float damage)
-    {
-        health -= damage;
-        if (health < 0) {
-            Die();
-        }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
+        base.Start();
         player = GameObject.Find("Hero");
         castle = GameObject.Find("Castle");
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
+        base.Update();
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         float distanceToCastle = Vector2.Distance(transform.position, castle.transform.position);
 

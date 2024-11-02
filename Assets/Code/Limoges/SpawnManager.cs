@@ -45,9 +45,7 @@ public class SpawnManager : MonoBehaviour
         {
             string path = AssetDatabase.GUIDToAssetPath(prefabPath);
             string fileName = path.Split('/')[^1].Split('.')[0];
-            Debug.Log(fileName);
             var enemyPrefab = Resources.Load<GameObject>(baseEnemyResources+fileName);
-            Debug.Log(enemyPrefab);
             allEnemiesType.Add(enemyPrefab);
         }
         timeBeforeSpawn = GetNextRandomSpawn();

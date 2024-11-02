@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using GameLN.Limoges;
 using TMPro;
 
-public class PlayerMovements : MonoBehaviour
+public class PlayerMovements : RegenableEntity
 {
-    public GameObject healthBar;
     public GameObject classicMissile;
-    public float speed = 5f;
     public float dashSpeed = 50f;
     public float dashTime = 0.3f;
     public float dashCooldown = 3f;
@@ -21,20 +21,22 @@ public class PlayerMovements : MonoBehaviour
     private bool dashInCooldown;
     private bool playerCollision = true;
 
-    void ApplyDamage(float damage) {
-
-    } 
-
-    void Start()
+    public override void Die()
     {
-        rb = GetComponent<Rigidbody2D>();
-        nextDash = Time.time;
-        Instantiate(healthBar, transform.position, Quaternion.identity);
+        base.Die();
+        SceneManager.LoadScene("Scenes/Limoges/GameOver");
     }
 
-    void FixedUpdate()
+    public override void Start()
     {
+        base.Start();
+        rb = GetComponent<Rigidbody2D>();
+        nextDash = Time.time;
+    }
 
+    public override void Update()
+    {
+        base.Update();
         if (Input.GetMouseButtonDown(0))
         {
             FireMissile();

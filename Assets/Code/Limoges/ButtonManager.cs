@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
-    public string sceneName = "Limoges";
+    public string sceneName = "Limoges/Limoges";
     
     public void LoadScene() {
         SceneManager.LoadScene(sceneName);
