@@ -8,6 +8,10 @@ TagManager:
   - Player Spawn
   - Protected
   - Mami
+  - Solids
+  - Castle
+  - Spawns
+  - Enemy
   layers:
   - Default
   - TransparentFX
