@@ -16,18 +16,22 @@ public class SpawnManager : MonoBehaviour
     private float timeBeforeSpawn;
     private bool isPause = false;
 
+    private int level =1;
+
     float GetNextRandomSpawn()
     {
-        return Random.Range(timeInterSpawn - 2.5f, timeInterSpawn + 2.5f);
+        return Random.Range((timeInterSpawn - 2.5f)/level, (timeInterSpawn + 2.5f));
     }
-    
+
     void GenerateEnemy()
     {
         float random = Random.Range(0f, 1f);
         if (0 <= random && random < bossSpawnRate)
         {
             Instantiate(allEnemiesType[0], transform.position, Quaternion.identity);
-        } else if (bossSpawnRate <= random && random < bossSpawnRate+midBossSpawnRate) {
+        }
+        else if (bossSpawnRate <= random && random < bossSpawnRate + midBossSpawnRate)
+        {
             Instantiate(allEnemiesType[2], transform.position, Quaternion.identity);
         }
         else
@@ -36,9 +40,17 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    public void SetPause(bool pause) {
+    public void SetPause(bool pause)
+    {
         isPause = pause;
+        timeBeforeSpawn = timeInterSpawn / level;
     }
+
+    public void NextLevel()
+    {
+        level += 1;
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -50,7 +62,7 @@ public class SpawnManager : MonoBehaviour
         {
             string path = AssetDatabase.GUIDToAssetPath(prefabPath);
             string fileName = path.Split('/')[^1].Split('.')[0];
-            var enemyPrefab = Resources.Load<GameObject>(baseEnemyResources+fileName);
+            var enemyPrefab = Resources.Load<GameObject>(baseEnemyResources + fileName);
             allEnemiesType.Add(enemyPrefab);
         }
         timeBeforeSpawn = GetNextRandomSpawn();
@@ -59,7 +71,8 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isPause) {
+        if (isPause)
+        {
             return;
         }
         timeBeforeSpawn -= Time.deltaTime;

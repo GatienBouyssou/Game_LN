@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Limoges/Limoges.unity
     guid: 2741d0872395309afa37b1488e6a0d4f
+  - enabled: 1
+    path: Assets/Scenes/Limoges/LaWin.unity
+    guid: 942f1f42d4dbc5a46bcefec60224672a
   m_configObjects: {}

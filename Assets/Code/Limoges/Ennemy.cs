@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GameLN.Limoges;
+using UnityEngine.AI;
 
 public class Ennemy : RegenableEntity
 {
@@ -20,6 +21,7 @@ public class Ennemy : RegenableEntity
     public override void Update()
     {
         base.Update();
+        
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         float distanceToCastle = Vector2.Distance(transform.position, castle.transform.position);
 
