@@ -1,41 +1,16 @@
-using UnityEngine;
-using UnityEngine.Tilemaps;
+﻿using UnityEngine;
 
-public class IceTileEffect : MonoBehaviour, ITileEffect
+namespace Assets.Code.RiveB.World.TileEffect
 {
-    public Sprite[] iceSprites; 
-    public float slideFactor = 5f;
-
-    private GameObject player;
-    private Vector3 feetOffset = new Vector3(0, -0.5f, 0); 
-
-    void Start()
+    public class IceTileEffect : TileEffect
     {
-        player = GameObject.FindWithTag("Player");
-    }
+        public float slideFactor = 1.5f;
 
-    public bool IsApplicable(TileBase tile, Tilemap tilemap)
-    {
-        if (tile != null)
+        public override void ApplyEffect(Rigidbody2D playerRb)
         {
-            Vector3Int tilePosition = tilemap.WorldToCell(player.transform.position + feetOffset);
-            Sprite tileSprite = tilemap.GetSprite(tilePosition);
-
-            foreach (Sprite iceSprite in iceSprites)
-            {
-                if (tileSprite == iceSprite)
-                {
-                    return true;
-                }
-            }
+            Vector2 velocity = playerRb.velocity;
+            velocity.x *= slideFactor;
+            playerRb.velocity = velocity;
         }
-        return false;
-    }
-
-    public void ApplyEffect(Rigidbody2D playerRb)
-    {
-        Vector2 velocity = playerRb.velocity;
-        velocity.x *= slideFactor;
-        playerRb.velocity = velocity;
     }
 }

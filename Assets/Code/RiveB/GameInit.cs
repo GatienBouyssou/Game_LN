@@ -1,3 +1,4 @@
+using Assets.Code.RiveB.World.TileEffect;
 using UnityEngine;
 
 public class GameInitializer : MonoBehaviour
@@ -6,7 +7,6 @@ public class GameInitializer : MonoBehaviour
 
     void Start()
     {
-        IceTileEffect iceEffect = FindObjectOfType<IceTileEffect>();
-        tileEffectManager.RegisterTileEffect(iceEffect);
+        tileEffectManager.RegisterTileEffects();
     }
 }

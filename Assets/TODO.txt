@@ -1,1 +1,7 @@
-Ajouter les effets des tuiles
+TODO: glisser même si tu appuies sur une touche
+
+   ^			                ^
+ / ! \    !! IMPORTANT !!     / ! \
+(_____)                      (_____)
+
+Penser à modif le coéfficient du UpperFan quand on build le jeu 
